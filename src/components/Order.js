@@ -1,4 +1,6 @@
 import React from 'react';
+import Container from './Container';
+import Header from './Header';
 
 const Order = () => {
   const style = sessionStorage.getItem('selectedCoffeeName');
@@ -7,21 +9,16 @@ const Order = () => {
   const milk = sessionStorage.getItem('milk');
 
   return (
-    <div className="bg-gray-200">
-      <main className="container mx-auto bg-white min-h-screen overflow-x-hidden">
-        <header className="p-5">
-          <h5 className="font-extrabold">{'<'} Brew with Lex</h5>
-          <h2 className="text-2xl">Thank you for your order!</h2>
-        </header>
-        <article className="p-5">
-          <h4 className="text-xl font-semibold">Your order:</h4>
-          <p>Style: {style}</p>
-          <p>Size: {size}</p>
-          <p>Sugar: {sugar}</p>
-          <p>Milk: {milk}</p>
-        </article>
-      </main>
-    </div>
+    <Container>
+      <Header path="/style/size/extra/" selection="extra's" />
+      <article className="p-5">
+        <h4 className="text-xl font-semibold">Your order:</h4>
+        <p>Style: {style}</p>
+        <p>Size: {size}</p>
+        <p>Sugar: {sugar}</p>
+        <p>Milk: {milk}</p>
+      </article>
+    </Container>
   );
 };
 

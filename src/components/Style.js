@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
+import Container from './Container';
+import Header from './Header';
+import Nav from './Nav';
+import SelectionButton from './SelectionButton';
 import Size from './Size';
 import Ristretto from '../assets/size-medium.svg';
 import Cappuccino from '../assets/cappuccino.svg';
@@ -6,7 +11,6 @@ import Espresso from '../assets/espresso.svg';
 
 const Style = () => {
   const coffeeTypeList = JSON.parse(sessionStorage.getItem('coffeeTypes'));
-  const [coffeeTypeClicked, setCoffeeTypeClicked] = useState(false);
   const [selectedCoffeeSizes, setSelectedCoffeeSizes] = useState([]);
   const [selectedCoffeeExtras, setSelectedCoffeeExtras] = useState([]);
 
@@ -28,51 +32,42 @@ const Style = () => {
 
     return (
       <li key={index}>
-        <button
-          onClick={() => {
-            sessionStorage.setItem('selectedCoffeeName', JSON.stringify(name));
-            setSelectedCoffeeSizes(sizes);
-            setSelectedCoffeeExtras(extras);
-            setCoffeeTypeClicked(true);
-          }}
-          className="bg-green-light w-full text-left flex justify-start items-center p-6 rounded shadow mb-2"
-        >
-          <i className="w-12 h-12 bg-green-dark inline-block rounded-full overflow-hidden relative mr-4">
-            <img
-              className="absolute inset-1/4 -bottom-px"
-              src={getImage(name)}
-              alt="coffee style"
-            />
-          </i>
-          <span style={{ color: 'white' }}>{name}</span>
-        </button>
+        <Link to="/style/size">
+          <SelectionButton
+            onClick={() => {
+              sessionStorage.setItem(
+                'selectedCoffeeName',
+                JSON.stringify(name)
+              );
+              setSelectedCoffeeSizes(sizes);
+              setSelectedCoffeeExtras(extras);
+            }}
+            image={getImage(name)}
+            alt="coffee style"
+            name={name}
+          />
+        </Link>
       </li>
     );
   });
 
-  const renderCoffeeTypes = () => {
-    return (
-      <div className="bg-gray-200">
-        <main className="container mx-auto bg-white min-h-screen overflow-x-hidden">
-          <header className="p-5">
-            <h5 className="font-extrabold">{'<'} Brew with Lex</h5>
-            <h2 className="text-2xl">Select your style</h2>
-          </header>
-          <nav className="px-5">
+  return (
+    <Switch>
+      <Route path="/style/size">
+        <Size
+          selectedCoffeeSizes={selectedCoffeeSizes}
+          selectedCoffeeExtras={selectedCoffeeExtras}
+        />
+      </Route>
+      <Route path="/style">
+        <Container>
+          <Header path="/" selection="style" />
+          <Nav>
             <ul>{getCoffeeTypes}</ul>
-          </nav>
-        </main>
-      </div>
-    );
-  };
-
-  return !coffeeTypeClicked ? (
-    renderCoffeeTypes()
-  ) : (
-    <Size
-      selectedCoffeeSizes={selectedCoffeeSizes}
-      selectedCoffeeExtras={selectedCoffeeExtras}
-    />
+          </Nav>
+        </Container>
+      </Route>
+    </Switch>
   );
 };
 
