@@ -5,6 +5,7 @@ import Header from './Header';
 import Nav from './Nav';
 import SelectionButton from './SelectionButton';
 import Extra from './Extra';
+import useSessionStorage from '../hooks/useSessionStorage';
 import Venti from '../assets/size-small.svg';
 import Tall from '../assets/size-medium.svg';
 import Large from '../assets/size-large.svg';
@@ -13,6 +14,7 @@ const Size = ({ selectedCoffeeSizes, selectedCoffeeExtras }) => {
   const coffeeSizes = selectedCoffeeSizes;
   const coffeeExtras = selectedCoffeeExtras;
   const path = '/style';
+  const { setItem } = useSessionStorage();
 
   const getSizeName = (id) => {
     switch (id) {
@@ -48,7 +50,7 @@ const Size = ({ selectedCoffeeSizes, selectedCoffeeExtras }) => {
         <Link to="/style/size/extra">
           <SelectionButton
             onClick={() => {
-              sessionStorage.setItem('selectedCoffeeSize', sizeName);
+              setItem('selectedCoffeeSize', sizeName);
             }}
             image={getImage()}
             alt="coffee size"

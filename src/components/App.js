@@ -3,46 +3,41 @@ import { Switch, Route, Link } from 'react-router-dom';
 import Style from './Style';
 import Container from './Container';
 import url from '../api/darkRoastedBeans';
+import useFetchData from '../hooks/useFetchData';
+import useSessionStorage from '../hooks/useSessionStorage';
 import coffeeMachine from '../assets/coffee-machine.svg';
 import nfc from '../assets/nfc.svg';
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
+  const { loading, error, data } = useFetchData(url); // custom hook
+  const { setItem } = useSessionStorage();
   const [animationCoffeeMachine, setAnimationCoffeeMachine] = useState('');
   const [animationNfc, setAnimationNfc] = useState('');
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (data !== null) {
+      setItem('coffeeTypes', data.types);
+      setItem('coffeeSizes', data.sizes);
+      setItem('coffeeExtras', data.extras);
 
-  const getData = () => {
-    fetch(`${url}${process.env.REACT_APP_MACHINE_ID}`, { method: 'GET' })
-      .then((response) => response.json())
-      .then((coffee) => {
-        sessionStorage.setItem('coffeeTypes', JSON.stringify(coffee.types));
-        sessionStorage.setItem('coffeeSizes', JSON.stringify(coffee.sizes));
-        sessionStorage.setItem('coffeeExtras', JSON.stringify(coffee.extras));
-        setLoading(false);
+      setTimeout(() => {
+        setAnimationCoffeeMachine('translateX(125%)');
+        setAnimationNfc('translateX(-155%)');
+      }, 400);
+    }
+    // console.log('data: ', data);
+  }, [data]);
 
-        setTimeout(() => {
-          setAnimationCoffeeMachine('translateX(125%)');
-          setAnimationNfc('translateX(-155%)');
-        }, 400);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-
+  // refactored conditional rendering + added error render
   return (
     <Switch>
       <Route path="/style">
         <Style />
       </Route>
       <Route path="/">
-        {loading ? (
-          <div className="absolute inset-1/3">...loading</div>
-        ) : (
+        {loading && <div className="absolute inset-1/3">...loading</div>}
+        {error && <div className="absolute inset-1/3">{error}</div>}
+        {data && (
           <Container>
             <header className="p-5">
               <h5 className="font-extrabold">Dark Roasted Beans</h5>

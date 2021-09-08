@@ -1,12 +1,14 @@
 import React from 'react';
 import Container from './Container';
 import Header from './Header';
+import useSessionStorage from '../hooks/useSessionStorage';
 
 const Order = () => {
-  const style = sessionStorage.getItem('selectedCoffeeName');
-  const size = sessionStorage.getItem('selectedCoffeeSize');
-  const sugar = sessionStorage.getItem('sugar');
-  const milk = sessionStorage.getItem('milk');
+  const { getItem } = useSessionStorage();
+  const style = getItem('selectedCoffeeName');
+  const size = getItem('selectedCoffeeSize');
+  const sugar = getItem('sugar');
+  const milk = getItem('milk');
 
   return (
     <Container>

@@ -5,12 +5,14 @@ import Header from './Header';
 import Nav from './Nav';
 import SelectionButton from './SelectionButton';
 import Size from './Size';
+import useSessionStorage from '../hooks/useSessionStorage';
 import Ristretto from '../assets/size-medium.svg';
 import Cappuccino from '../assets/cappuccino.svg';
 import Espresso from '../assets/espresso.svg';
 
 const Style = () => {
-  const coffeeTypeList = JSON.parse(sessionStorage.getItem('coffeeTypes'));
+  const { setItem, getItem } = useSessionStorage();
+  const coffeeTypeList = getItem('coffeeTypes');
   const [selectedCoffeeSizes, setSelectedCoffeeSizes] = useState([]);
   const [selectedCoffeeExtras, setSelectedCoffeeExtras] = useState([]);
 
@@ -35,10 +37,7 @@ const Style = () => {
         <Link to="/style/size">
           <SelectionButton
             onClick={() => {
-              sessionStorage.setItem(
-                'selectedCoffeeName',
-                JSON.stringify(name)
-              );
+              setItem('selectedCoffeeName', name);
               setSelectedCoffeeSizes(sizes);
               setSelectedCoffeeExtras(extras);
             }}

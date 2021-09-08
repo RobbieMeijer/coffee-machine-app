@@ -5,13 +5,15 @@ import Header from './Header';
 import Nav from './Nav';
 import ExtraButton from './ExtraButton';
 import ExtraRadioButton from './ExtraRadioButton';
+import useSessionStorage from '../hooks/useSessionStorage';
 import milk from '../assets/milk.svg';
 import sugar from '../assets/cappuccino.svg';
 import Order from './Order';
 
 const Extra = ({ coffeeExtras }) => {
+  const { setItem, getItem } = useSessionStorage();
   const selectedCoffeeExtraIds = coffeeExtras;
-  const allExtraOptions = JSON.parse(sessionStorage.getItem('coffeeExtras'));
+  const allExtraOptions = getItem('coffeeExtras');
 
   // get the extra group name e.g. sugar or milk for radio buttons
   const getGroupNameRadioButtons = (extraId) => {
@@ -55,7 +57,7 @@ const Extra = ({ coffeeExtras }) => {
       // checking radio button + storing choice into session storage
       const checkRadioButton = (e) => {
         e.target.checked = true;
-        sessionStorage.setItem(`${extraName}`, name);
+        setItem(`${extraName}`, name);
       };
 
       return (
