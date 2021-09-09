@@ -14,36 +14,19 @@ const Size = ({ selectedCoffeeSizes, selectedCoffeeExtras }) => {
   const coffeeSizes = selectedCoffeeSizes;
   const coffeeExtras = selectedCoffeeExtras;
   const path = '/style';
-  const { setItem } = useSessionStorage();
+  const { setItem, getItem } = useSessionStorage();
+  const allCoffeeSizes = getItem('coffeeSizes');
 
-  const getSizeName = (id) => {
-    switch (id) {
-      case '60ba33dbc45ecee5d77a01f8':
-        return 'Tall';
-      case '60ba3368c45ecee5d77a016b':
-        return 'Venti';
-      case '60ba18d13ca8c43196b5f606':
-        return 'Large';
-      default:
-        return null;
-    }
+  const getSizeName = (allCoffeeSizes, sizeId) => {
+    const sizeObject = allCoffeeSizes.find((coffeeSize) => {
+      return coffeeSize._id === sizeId;
+    });
+
+    return sizeObject.name;
   };
 
-  const getSizes = coffeeSizes.map((size, index) => {
-    const sizeName = getSizeName(size);
-
-    const getImage = () => {
-      switch (sizeName) {
-        case 'Tall':
-          return Tall;
-        case 'Venti':
-          return Venti;
-        case 'Large':
-          return Large;
-        default:
-          return null;
-      }
-    };
+  const getSizes = coffeeSizes.map((sizeId, index) => {
+    const sizeName = getSizeName(allCoffeeSizes, sizeId);
 
     return (
       <li key={index}>
@@ -52,7 +35,7 @@ const Size = ({ selectedCoffeeSizes, selectedCoffeeExtras }) => {
             onClick={() => {
               setItem('selectedCoffeeSize', sizeName);
             }}
-            image={getImage()}
+            image={sizeName}
             alt="coffee size"
             name={sizeName}
           />

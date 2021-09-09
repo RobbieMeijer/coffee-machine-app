@@ -15,32 +15,16 @@ const Extra = ({ coffeeExtras }) => {
   const selectedCoffeeExtraIds = coffeeExtras;
   const allExtraOptions = getItem('coffeeExtras');
 
-  // get the extra group name e.g. sugar or milk for radio buttons
-  const getGroupNameRadioButtons = (extraId) => {
-    switch (extraId) {
-      case '60ba197c2e35f2d9c786c525':
-        return 'sugar';
-      case '60ba34a0c45ecee5d77a0263':
-        return 'milk';
-      default:
-        return null;
-    }
+  const getGroupNameRadioButtons = (allExtraOptions, extraId) => {
+    const extraObject = allExtraOptions.find((extraOptions) => {
+      return extraOptions._id === extraId;
+    });
+
+    return extraObject.name;
   };
 
   const getExtras = selectedCoffeeExtraIds.map((extraId, index) => {
-    const extraName = getGroupNameRadioButtons(extraId);
-
-    // get the imgage source for the extra
-    const imageSrc = () => {
-      switch (extraName) {
-        case 'sugar':
-          return sugar;
-        case 'milk':
-          return milk;
-        default:
-          return null;
-      }
-    };
+    const extraName = getGroupNameRadioButtons(allExtraOptions, extraId);
 
     // extract from selected coffee, the ids from extra
     const selectedCoffeeExtras = allExtraOptions.filter((extraOptions) => {
@@ -82,8 +66,8 @@ const Extra = ({ coffeeExtras }) => {
         onClick={() => {
           document.getElementById(index).style.height = 'auto';
         }}
-        src={imageSrc()}
-        alt={getGroupNameRadioButtons(extraId)}
+        src={extraName}
+        alt={getGroupNameRadioButtons(allExtraOptions, extraId)}
         name={name}
         getExtraOptions={getExtraOptions}
       />

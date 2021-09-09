@@ -3,12 +3,12 @@ import Container from './Container';
 import Header from './Header';
 import useSessionStorage from '../hooks/useSessionStorage';
 
-const Order = () => {
+const Order = ({ extraName }) => {
   const { getItem } = useSessionStorage();
   const style = getItem('selectedCoffeeName');
   const size = getItem('selectedCoffeeSize');
-  const sugar = getItem('sugar');
-  const milk = getItem('milk');
+  const sugar = getItem('Select the amount of sugar');
+  const milk = getItem('Select type of milk');
 
   return (
     <Container>

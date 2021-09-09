@@ -16,21 +16,8 @@ const Style = () => {
   const [selectedCoffeeSizes, setSelectedCoffeeSizes] = useState([]);
   const [selectedCoffeeExtras, setSelectedCoffeeExtras] = useState([]);
 
-  const getImage = (name) => {
-    switch (name) {
-      case 'Cappuccino':
-        return Cappuccino;
-      case 'Espresso':
-        return Espresso;
-      case 'Ristretto':
-        return Ristretto;
-      default:
-        return null;
-    }
-  };
-
   const getCoffeeTypes = coffeeTypeList.map((type, index) => {
-    const { _id: id, name, sizes, extras } = type;
+    const { name, sizes, extras } = type;
 
     return (
       <li key={index}>
@@ -41,7 +28,7 @@ const Style = () => {
               setSelectedCoffeeSizes(sizes);
               setSelectedCoffeeExtras(extras);
             }}
-            image={getImage(name)}
+            image={name}
             alt="coffee style"
             name={name}
           />
