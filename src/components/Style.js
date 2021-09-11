@@ -6,13 +6,12 @@ import Nav from './Nav';
 import SelectionButton from './SelectionButton';
 import Size from './Size';
 import useSessionStorage from '../hooks/useSessionStorage';
-import Ristretto from '../assets/size-medium.svg';
-import Cappuccino from '../assets/cappuccino.svg';
-import Espresso from '../assets/espresso.svg';
+import useGetImage from '../hooks/useGetImage';
 
 const Style = () => {
   const { setItem, getItem } = useSessionStorage();
-  const coffeeTypeList = getItem('coffeeTypes');
+  const { getImage } = useGetImage(); // added custom hook
+  const coffeeTypeList = getItem('coffee types');
   const [selectedCoffeeSizes, setSelectedCoffeeSizes] = useState([]);
   const [selectedCoffeeExtras, setSelectedCoffeeExtras] = useState([]);
 
@@ -24,11 +23,11 @@ const Style = () => {
         <Link to="/style/size">
           <SelectionButton
             onClick={() => {
-              setItem('selectedCoffeeName', name);
+              setItem('selected coffee name', name);
               setSelectedCoffeeSizes(sizes);
               setSelectedCoffeeExtras(extras);
             }}
-            image={name}
+            src={getImage(name)}
             alt="coffee style"
             name={name}
           />

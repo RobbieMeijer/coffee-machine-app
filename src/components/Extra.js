@@ -5,36 +5,31 @@ import Header from './Header';
 import Nav from './Nav';
 import ExtraButton from './ExtraButton';
 import ExtraRadioButton from './ExtraRadioButton';
-import useSessionStorage from '../hooks/useSessionStorage';
-import milk from '../assets/milk.svg';
-import sugar from '../assets/cappuccino.svg';
 import Order from './Order';
+import useSessionStorage from '../hooks/useSessionStorage';
+import useGetName from '../hooks/useGetName';
+import useGetImage from '../hooks/useGetImage';
 
 const Extra = ({ coffeeExtras }) => {
-  const { setItem, getItem } = useSessionStorage();
   const selectedCoffeeExtraIds = coffeeExtras;
-  const allExtraOptions = getItem('coffeeExtras');
-
-  const getGroupNameRadioButtons = (allExtraOptions, extraId) => {
-    const extraObject = allExtraOptions.find((extraOptions) => {
-      return extraOptions._id === extraId;
-    });
-
-    return extraObject.name;
-  };
+  const { setItem, getItem } = useSessionStorage();
+  const allExtraOptions = getItem('coffee extras');
+  const { getName } = useGetName(); // added custom hook
+  const { getImage } = useGetImage(); // added custom hook
 
   const getExtras = selectedCoffeeExtraIds.map((extraId, index) => {
-    const extraName = getGroupNameRadioButtons(allExtraOptions, extraId);
+    const extraName = getName(allExtraOptions, extraId);
 
-    // extract from selected coffee, the ids from extra
+    // 1. extract from selected coffee, the ids from extra
     const selectedCoffeeExtras = allExtraOptions.filter((extraOptions) => {
       return extraOptions._id === extraId;
     });
 
-    // extract the name and extra options e.g. sugar and or milk
+    // 2. extract from selected coffee,
+    // the name and extra options e.g. sugar and or milk
     const { name, subselections: extraOptions } = selectedCoffeeExtras[0];
 
-    // get the radio button values per extra
+    // 3. extract from selected coffee, the radio button values per extra
     const getExtraOptions = extraOptions.map((extraOption, index) => {
       const { name } = extraOption;
 
@@ -66,8 +61,8 @@ const Extra = ({ coffeeExtras }) => {
         onClick={() => {
           document.getElementById(index).style.height = 'auto';
         }}
-        src={extraName}
-        alt={getGroupNameRadioButtons(allExtraOptions, extraId)}
+        src={getImage(name)}
+        alt={extraName}
         name={name}
         getExtraOptions={getExtraOptions}
       />

@@ -6,36 +6,27 @@ import Nav from './Nav';
 import SelectionButton from './SelectionButton';
 import Extra from './Extra';
 import useSessionStorage from '../hooks/useSessionStorage';
-import Venti from '../assets/size-small.svg';
-import Tall from '../assets/size-medium.svg';
-import Large from '../assets/size-large.svg';
+import useGetName from '../hooks/useGetName';
+import useGetImage from '../hooks/useGetImage';
 
 const Size = ({ selectedCoffeeSizes, selectedCoffeeExtras }) => {
-  const coffeeSizes = selectedCoffeeSizes;
-  const coffeeExtras = selectedCoffeeExtras;
   const path = '/style';
   const { setItem, getItem } = useSessionStorage();
-  const allCoffeeSizes = getItem('coffeeSizes');
+  const allCoffeeSizes = getItem('coffee sizes');
+  const { getName } = useGetName(); // added custom hook
+  const { getImage } = useGetImage(); // added custom hook
 
-  const getSizeName = (allCoffeeSizes, sizeId) => {
-    const sizeObject = allCoffeeSizes.find((coffeeSize) => {
-      return coffeeSize._id === sizeId;
-    });
-
-    return sizeObject.name;
-  };
-
-  const getSizes = coffeeSizes.map((sizeId, index) => {
-    const sizeName = getSizeName(allCoffeeSizes, sizeId);
+  const getSizes = selectedCoffeeSizes.map((sizeId, index) => {
+    const sizeName = getName(allCoffeeSizes, sizeId);
 
     return (
       <li key={index}>
         <Link to="/style/size/extra">
           <SelectionButton
             onClick={() => {
-              setItem('selectedCoffeeSize', sizeName);
+              setItem('selected coffee size', sizeName);
             }}
-            image={sizeName}
+            src={getImage(sizeName)}
             alt="coffee size"
             name={sizeName}
           />
@@ -47,7 +38,7 @@ const Size = ({ selectedCoffeeSizes, selectedCoffeeExtras }) => {
   return (
     <Switch>
       <Route path="/style/size/extra">
-        <Extra coffeeExtras={coffeeExtras} />
+        <Extra coffeeExtras={selectedCoffeeExtras} />
       </Route>
       <Route path="/style/size">
         <Container>

@@ -10,22 +10,21 @@ import nfc from '../assets/nfc.svg';
 
 const App = () => {
   const { loading, error, data } = useFetchData(url); // custom hook
-  const { setItem } = useSessionStorage();
+  const { setItem } = useSessionStorage(); // custom hook
   const [animationCoffeeMachine, setAnimationCoffeeMachine] = useState('');
   const [animationNfc, setAnimationNfc] = useState('');
 
   useEffect(() => {
     if (data !== null) {
-      setItem('coffeeTypes', data.types);
-      setItem('coffeeSizes', data.sizes);
-      setItem('coffeeExtras', data.extras);
+      setItem('coffee types', data.types);
+      setItem('coffee sizes', data.sizes);
+      setItem('coffee extras', data.extras);
 
       setTimeout(() => {
         setAnimationCoffeeMachine('translateX(125%)');
         setAnimationNfc('translateX(-155%)');
       }, 400);
     }
-    // console.log('data: ', data);
   }, [data]);
 
   // refactored conditional rendering + added error render
