@@ -5,13 +5,12 @@ const Header = ({ path, selection }) => {
   let history = useHistory();
 
   const goBack = () => {
-    console.log('path: ', path);
     history.push(path);
   };
 
   return (
     <header className="p-5">
-      <Link to="/">
+      <Link to={path}>
         <h5 onClick={goBack} className="font-extrabold cursor-pointer">
           {'<'} Brew with Lex
         </h5>
