@@ -1,6 +1,12 @@
 import React from 'react';
+import { ButtonSelection } from '../interfaces';
 
-const SelectionButton = ({ onClick, src, alt, name }) => {
+const SelectionButton: React.FC<ButtonSelection> = ({
+  onClick,
+  src,
+  alt,
+  name,
+}) => {
   return (
     <button
       onClick={onClick}

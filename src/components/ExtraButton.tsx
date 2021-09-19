@@ -1,6 +1,15 @@
 import React from 'react';
+import { ButtonExtraOption } from '../interfaces';
 
-const ExtraButton = ({ key, id, onClick, src, alt, name, getExtraOptions }) => {
+const ExtraButton: React.FC<ButtonExtraOption> = ({
+  key,
+  id,
+  onClick,
+  src,
+  alt,
+  name,
+  getExtraOptions,
+}) => {
   return (
     <li key={key} className="h-auto overflow-y-hidden">
       <button

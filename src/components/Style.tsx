@@ -7,34 +7,37 @@ import SelectionButton from './SelectionButton';
 import Size from './Size';
 import useSessionStorage from '../hooks/useSessionStorage';
 import useGetImage from '../hooks/useGetImage';
+import { CoffeeType } from '../interfaces';
 
-const Style = () => {
+const Style: React.FC = () => {
   const { setItem, getItem } = useSessionStorage();
   const { getImage } = useGetImage(); // added custom hook
   const coffeeTypeList = getItem('coffee types');
   const [selectedCoffeeSizes, setSelectedCoffeeSizes] = useState([]);
   const [selectedCoffeeExtras, setSelectedCoffeeExtras] = useState([]);
 
-  const getCoffeeTypes = coffeeTypeList.map((type, index) => {
-    const { name, sizes, extras } = type;
+  const getCoffeeTypes = coffeeTypeList.map(
+    (type: CoffeeType, index: React.Key | null | undefined) => {
+      const { name, sizes, extras } = type;
 
-    return (
-      <li key={index}>
-        <Link to="/style/size">
-          <SelectionButton
-            onClick={() => {
-              setItem('selected coffee name', name);
-              setSelectedCoffeeSizes(sizes);
-              setSelectedCoffeeExtras(extras);
-            }}
-            src={getImage(name)}
-            alt="coffee style"
-            name={name}
-          />
-        </Link>
-      </li>
-    );
-  });
+      return (
+        <li key={index}>
+          <Link to="/style/size">
+            <SelectionButton
+              onClick={() => {
+                setItem('selected coffee name', name);
+                setSelectedCoffeeSizes(sizes);
+                setSelectedCoffeeExtras(extras);
+              }}
+              src={getImage(name)}
+              alt="coffee style"
+              name={name}
+            />
+          </Link>
+        </li>
+      );
+    }
+  );
 
   return (
     <Switch>

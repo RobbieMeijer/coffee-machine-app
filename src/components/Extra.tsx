@@ -9,8 +9,9 @@ import Order from './Order';
 import useSessionStorage from '../hooks/useSessionStorage';
 import useGetName from '../hooks/useGetName';
 import useGetImage from '../hooks/useGetImage';
+import { ExtraProps } from '../interfaces';
 
-const Extra = ({ coffeeExtras }) => {
+const Extra: React.FC<ExtraProps> = ({ coffeeExtras }) => {
   const selectedCoffeeExtraIds = coffeeExtras;
   const { setItem, getItem } = useSessionStorage();
   const allExtraOptions = getItem('coffee extras');
@@ -21,45 +22,50 @@ const Extra = ({ coffeeExtras }) => {
     const extraName = getName(allExtraOptions, extraId);
 
     // 1. extract from selected coffee, the ids from extra
-    const selectedCoffeeExtras = allExtraOptions.filter((extraOptions) => {
-      return extraOptions._id === extraId;
-    });
+    const selectedCoffeeExtras = allExtraOptions.filter(
+      (extraOptions: { _id: string }) => {
+        return extraOptions._id === extraId;
+      }
+    );
 
     // 2. extract from selected coffee,
     // the name and extra options e.g. sugar and or milk
     const { name, subselections: extraOptions } = selectedCoffeeExtras[0];
 
     // 3. extract from selected coffee, the radio button values per extra
-    const getExtraOptions = extraOptions.map((extraOption, index) => {
-      const { name } = extraOption;
+    const getExtraOptions = extraOptions.map(
+      (extraOption: { name: string }, index: string) => {
+        const { name } = extraOption;
 
-      // checking radio button + storing choice into session storage
-      const checkRadioButton = (e) => {
-        e.target.checked = true;
-        setItem(`${extraName}`, name);
-      };
+        // checking radio button + storing choice into session storage
+        const checkRadioButton = (e: { target: HTMLInputElement }) => {
+          e.target.checked = true;
+          setItem(`${extraName}`, name);
+        };
 
-      return (
-        <ExtraRadioButton
-          key={index}
-          onClick={(e) => {
-            checkRadioButton(e);
-          }}
-          id={name}
-          name={extraName}
-          value={name}
-          htmlFor={name}
-          extraName={name}
-        />
-      );
-    });
+        return (
+          <ExtraRadioButton
+            key={index}
+            onClick={(e: any) => {
+              checkRadioButton(e);
+            }}
+            id={name}
+            name={extraName}
+            value={name}
+            htmlFor={name}
+            extraName={name}
+          />
+        );
+      }
+    );
 
     return (
       <ExtraButton
-        key={index}
-        id={index}
+        key={`${index}`}
+        id={`${index}`}
         onClick={() => {
-          document.getElementById(index).style.height = 'auto';
+          const el: any = document.getElementById(`${index}`);
+          el.style.height = 'auto';
         }}
         src={getImage(name)}
         alt={extraName}

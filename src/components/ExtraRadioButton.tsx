@@ -1,6 +1,15 @@
 import React from 'react';
+import { RadioButton } from '../interfaces';
 
-const ExtraButton = ({ key, onClick, id, name, value, htmlFor, extraName }) => {
+const ExtraRadioButton: React.FC<RadioButton> = ({
+  key,
+  onClick,
+  id,
+  name,
+  value,
+  htmlFor,
+  extraName,
+}) => {
   return (
     <li key={key} className="bg-green w-full rounded shadow relative mb-3">
       <input
@@ -22,4 +31,4 @@ const ExtraButton = ({ key, onClick, id, name, value, htmlFor, extraName }) => {
   );
 };
 
-export default ExtraButton;
+export default ExtraRadioButton;

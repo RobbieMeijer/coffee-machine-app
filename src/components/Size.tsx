@@ -8,8 +8,12 @@ import Extra from './Extra';
 import useSessionStorage from '../hooks/useSessionStorage';
 import useGetName from '../hooks/useGetName';
 import useGetImage from '../hooks/useGetImage';
+import { SizeProps } from '../interfaces';
 
-const Size = ({ selectedCoffeeSizes, selectedCoffeeExtras }) => {
+const Size: React.FC<SizeProps> = ({
+  selectedCoffeeSizes,
+  selectedCoffeeExtras,
+}) => {
   const path = '/style';
   const { setItem, getItem } = useSessionStorage();
   const allCoffeeSizes = getItem('coffee sizes');

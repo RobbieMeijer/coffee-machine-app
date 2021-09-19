@@ -2,23 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import Style from './Style';
 import Container from './Container';
-import url from '../api/darkRoastedBeans';
+import theData from '../api/darkRoastedBeans';
 import useFetchData from '../hooks/useFetchData';
 import useSessionStorage from '../hooks/useSessionStorage';
 import coffeeMachine from '../assets/coffee-machine.svg';
 import nfc from '../assets/nfc.svg';
 
-const App = () => {
-  const { loading, error, data } = useFetchData(url); // custom hook
+const App: React.FC = () => {
+  const { loading, error, data } = useFetchData(theData); // custom hook
   const { setItem } = useSessionStorage(); // custom hook
   const [animationCoffeeMachine, setAnimationCoffeeMachine] = useState('');
   const [animationNfc, setAnimationNfc] = useState('');
 
   useEffect(() => {
     if (data !== null) {
-      setItem('coffee types', data.types);
-      setItem('coffee sizes', data.sizes);
-      setItem('coffee extras', data.extras);
+      const { types, sizes, extras } = data;
+
+      setItem('coffee types', types);
+      setItem('coffee sizes', sizes);
+      setItem('coffee extras', extras);
 
       setTimeout(() => {
         setAnimationCoffeeMachine('translateX(125%)');
