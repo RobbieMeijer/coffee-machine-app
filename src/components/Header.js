@@ -11,7 +11,10 @@ const Header = ({ path, selection }) => {
   return (
     <header className="p-5">
       <Link to={path}>
-        <h5 onClick={goBack} className="font-extrabold cursor-pointer">
+        <h5
+          onClick={goBack}
+          className="font-extrabold cursor-pointer inline-block"
+        >
           {'<'} Brew with Lex
         </h5>
       </Link>
