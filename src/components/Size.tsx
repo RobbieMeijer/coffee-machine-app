@@ -8,7 +8,7 @@ import Extra from './Extra';
 import useSessionStorage from '../hooks/useSessionStorage';
 import useGetName from '../hooks/useGetName';
 import useGetImage from '../hooks/useGetImage';
-import { SizeProps } from '../interfaces';
+import { SizeProps } from '../types';
 
 const Size: React.FC<SizeProps> = ({
   selectedCoffeeSizes,

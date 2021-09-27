@@ -1,5 +1,5 @@
 import React from 'react';
-import { RadioButton } from '../interfaces';
+import { RadioButton } from '../types';
 
 const ExtraRadioButton: React.FC<RadioButton> = ({
   key,

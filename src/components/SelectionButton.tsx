@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonSelection } from '../interfaces';
+import { ButtonSelection } from '../types';
 
 const SelectionButton: React.FC<ButtonSelection> = ({
   onClick,

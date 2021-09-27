@@ -28,7 +28,7 @@ export interface ButtonSelection {
 }
 
 export interface ButtonExtraOption extends ButtonSelection {
-  key: string;
+  key: number;
   id: string;
   getExtraOptions: string[];
 }

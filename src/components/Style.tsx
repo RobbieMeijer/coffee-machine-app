@@ -7,7 +7,7 @@ import SelectionButton from './SelectionButton';
 import Size from './Size';
 import useSessionStorage from '../hooks/useSessionStorage';
 import useGetImage from '../hooks/useGetImage';
-import { CoffeeType } from '../interfaces';
+import { CoffeeType } from '../types';
 
 const Style: React.FC = () => {
   const { setItem, getItem } = useSessionStorage();

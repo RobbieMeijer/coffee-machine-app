@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonExtraOption } from '../interfaces';
+import { ButtonExtraOption } from '../types';
 
 const ExtraButton: React.FC<ButtonExtraOption> = ({
   key,
@@ -11,7 +11,7 @@ const ExtraButton: React.FC<ButtonExtraOption> = ({
   getExtraOptions,
 }) => {
   return (
-    <li key={key} className="h-auto overflow-y-hidden">
+    <li key={`btn-extra-${key}`} className="h-auto overflow-y-hidden">
       <button
         id={id}
         onClick={onClick}

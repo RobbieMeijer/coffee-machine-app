@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import Style from './Style';
 import Container from './Container';
-import theData from '../api/darkRoastedBeans';
+import theData from '../api/exportCoffeeData';
 import useFetchData from '../hooks/useFetchData';
 import useSessionStorage from '../hooks/useSessionStorage';
 import coffeeMachine from '../assets/coffee-machine.svg';

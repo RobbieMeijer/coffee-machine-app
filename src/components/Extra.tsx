@@ -9,7 +9,7 @@ import Order from './Order';
 import useSessionStorage from '../hooks/useSessionStorage';
 import useGetName from '../hooks/useGetName';
 import useGetImage from '../hooks/useGetImage';
-import { ExtraProps } from '../interfaces';
+import { ExtraProps } from '../types';
 
 const Extra: React.FC<ExtraProps> = ({ coffeeExtras }) => {
   const selectedCoffeeExtraIds = coffeeExtras;
@@ -61,7 +61,7 @@ const Extra: React.FC<ExtraProps> = ({ coffeeExtras }) => {
 
     return (
       <ExtraButton
-        key={`${index}`}
+        key={index}
         id={`${index}`}
         onClick={() => {
           const el: any = document.getElementById(`${index}`);

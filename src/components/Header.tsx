@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { HeaderComponent } from '../interfaces';
+import { HeaderComponent } from '../types';
 
 const Header: React.FC<HeaderComponent> = ({ path, selection }) => {
   let history = useHistory();
