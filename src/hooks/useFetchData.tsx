@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 const useFetchData = (theData: any) => {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // added an error state to return
-  const [data, setData] = useState(null); // added data stateto also return
+  const [error, setError] = useState('');
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     getData(); // moved fetching data to seperate function
@@ -13,11 +13,13 @@ const useFetchData = (theData: any) => {
   const getData = async () => {
     try {
       const response = await fetch(theData);
-      setData(theData);
-      setLoading(false);
-      setError(null);
+      if (response.ok) {
+        setData(theData);
+        setLoading(false);
+        setError('');
+      }
     } catch (error) {
-      throw Error('No coffee beans left, need to go to store...');
+      setError(`${error}`);
     }
   };
 
