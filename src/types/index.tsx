@@ -30,12 +30,12 @@ export interface ButtonSelection {
 export interface ButtonExtraOption extends ButtonSelection {
   key: number;
   id: string;
-  getExtraOptions: string[];
+  extraOptions: { _id: string; name: string }[];
 }
 
 export interface RadioButton {
   onClick: MouseEventHandler;
-  key: string;
+  key: number;
   id: string;
   name: string;
   value: string;

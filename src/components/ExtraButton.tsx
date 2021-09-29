@@ -1,4 +1,6 @@
 import React from 'react';
+import useSessionStorage from '../hooks/useSessionStorage';
+import ExtraRadioButton from './ExtraRadioButton';
 import { ButtonExtraOption } from '../types';
 
 const ExtraButton: React.FC<ButtonExtraOption> = ({
@@ -8,8 +10,35 @@ const ExtraButton: React.FC<ButtonExtraOption> = ({
   src,
   alt,
   name,
-  getExtraOptions,
+  extraOptions,
 }) => {
+  const { setItem } = useSessionStorage();
+
+  // extract from selected coffee, the radio button values per extra
+  const renderExtraOptions = extraOptions.map((extraOption, index) => {
+    const { name } = extraOption;
+
+    // checking radio button + storing choice into session storage
+    const checkRadioButton = (e: { target: HTMLInputElement }) => {
+      e.target.checked = true;
+      setItem(`${alt}`, name);
+    };
+
+    return (
+      <ExtraRadioButton
+        key={index}
+        onClick={(e: any) => {
+          checkRadioButton(e);
+        }}
+        id={name}
+        name={alt}
+        value={name}
+        htmlFor={name}
+        extraName={name}
+      />
+    );
+  });
+
   return (
     <li key={`btn-extra-${key}`} className="h-auto overflow-y-hidden">
       <button
@@ -32,7 +61,7 @@ const ExtraButton: React.FC<ButtonExtraOption> = ({
           <br />
           <hr style={{ color: 'white' }} />
           <br />
-          <ul>{getExtraOptions}</ul>
+          <ul>{renderExtraOptions}</ul>
         </div>
       </button>
     </li>

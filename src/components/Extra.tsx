@@ -4,7 +4,6 @@ import Container from './Container';
 import Header from './Header';
 import Nav from './Nav';
 import ExtraButton from './ExtraButton';
-import ExtraRadioButton from './ExtraRadioButton';
 import Order from './Order';
 import useSessionStorage from '../hooks/useSessionStorage';
 import useGetName from '../hooks/useGetName';
@@ -13,16 +12,16 @@ import { ExtraProps } from '../types';
 
 const Extra: React.FC<ExtraProps> = ({ coffeeExtras }) => {
   const selectedCoffeeExtraIds = coffeeExtras;
-  const { setItem, getItem } = useSessionStorage();
+  const { getItem } = useSessionStorage();
   const allExtraOptions = getItem('coffee extras');
   const { getName } = useGetName(); // added custom hook
   const { getImage } = useGetImage(); // added custom hook
 
-  const getExtras = selectedCoffeeExtraIds.map((extraId, index) => {
+  const renderExtraButtons = selectedCoffeeExtraIds.map((extraId, index) => {
     const extraName = getName(allExtraOptions, extraId);
 
     // 1. extract from selected coffee, the ids from extra
-    const selectedCoffeeExtras = allExtraOptions.filter(
+    const selectedCoffeeExtras = allExtraOptions.find(
       (extraOptions: { _id: string }) => {
         return extraOptions._id === extraId;
       }
@@ -30,34 +29,7 @@ const Extra: React.FC<ExtraProps> = ({ coffeeExtras }) => {
 
     // 2. extract from selected coffee,
     // the name and extra options e.g. sugar and or milk
-    const { name, subselections: extraOptions } = selectedCoffeeExtras[0];
-
-    // 3. extract from selected coffee, the radio button values per extra
-    const getExtraOptions = extraOptions.map(
-      (extraOption: { name: string }, index: string) => {
-        const { name } = extraOption;
-
-        // checking radio button + storing choice into session storage
-        const checkRadioButton = (e: { target: HTMLInputElement }) => {
-          e.target.checked = true;
-          setItem(`${extraName}`, name);
-        };
-
-        return (
-          <ExtraRadioButton
-            key={index}
-            onClick={(e: any) => {
-              checkRadioButton(e);
-            }}
-            id={name}
-            name={extraName}
-            value={name}
-            htmlFor={name}
-            extraName={name}
-          />
-        );
-      }
-    );
+    const { name, subselections } = selectedCoffeeExtras;
 
     return (
       <ExtraButton
@@ -70,7 +42,7 @@ const Extra: React.FC<ExtraProps> = ({ coffeeExtras }) => {
         src={getImage(name)}
         alt={extraName}
         name={name}
-        getExtraOptions={getExtraOptions}
+        extraOptions={subselections} // 3. pass extra's from selected coffee to extrabutton component
       />
     );
   });
@@ -84,7 +56,7 @@ const Extra: React.FC<ExtraProps> = ({ coffeeExtras }) => {
         <Container>
           <Header path="/style/size" selection="extra's" />
           <Nav>
-            <ul>{getExtras}</ul>
+            <ul>{renderExtraButtons}</ul>
             <Link to="/style/size/extra/order">
               <button
                 className="bg-green-dark rounded px-4 py-3 mt-4 mb-6 active:transform active:scale-95"
