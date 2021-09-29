@@ -15,7 +15,7 @@ const ExtraButton: React.FC<ButtonExtraOption> = ({
   const { setItem } = useSessionStorage();
 
   // extract from selected coffee, the radio button values per extra
-  const renderExtraOptions = extraOptions.map((extraOption, index) => {
+  const renderExtraRadioButtons = extraOptions.map((extraOption, index) => {
     const { name } = extraOption;
 
     // checking radio button + storing choice into session storage
@@ -61,7 +61,7 @@ const ExtraButton: React.FC<ButtonExtraOption> = ({
           <br />
           <hr style={{ color: 'white' }} />
           <br />
-          <ul>{renderExtraOptions}</ul>
+          <ul>{renderExtraRadioButtons}</ul>
         </div>
       </button>
     </li>
