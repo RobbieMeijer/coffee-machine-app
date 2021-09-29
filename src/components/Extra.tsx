@@ -35,10 +35,6 @@ const Extra: React.FC<ExtraProps> = ({ coffeeExtras }) => {
       <ExtraButton
         key={index}
         id={`${index}`}
-        onClick={() => {
-          const el: any = document.getElementById(`${index}`);
-          el.style.height = 'auto';
-        }}
         src={getImage(name)}
         alt={extraName}
         name={name}

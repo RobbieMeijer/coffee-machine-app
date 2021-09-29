@@ -1,4 +1,3 @@
-import React from 'react';
 import Container from './Container';
 import Header from './Header';
 import useSessionStorage from '../hooks/useSessionStorage';
